@@ -1,0 +1,14 @@
+.btn-purple {
+  background-color: #2f0141!important;
+  border-color: #2f0141 !important;
+  color: white !important;
+}
+
+.btn-purple:hover {
+  background-color: #5b21b6 !important;
+  border-color: #5b21b6 !important;
+  color: white !important;
+}
+body{
+    background: radial-gradient( #1E1B4B 0%, #0F172A 100%) !important;
+}
