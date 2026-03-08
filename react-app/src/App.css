@@ -12,3 +12,11 @@
 body{
     background: radial-gradient( #1E1B4B 0%, #0F172A 100%) !important;
 }
+.card{
+  transition:ease-in-out 0.4s;
+}
+.card:hover{
+  transform: scale(1.1);
+  color:white;
+  background-color:#2f0141 ;
+}
