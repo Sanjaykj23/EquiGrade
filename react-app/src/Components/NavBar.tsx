@@ -1,7 +1,7 @@
 function NavBar() {
   return (
     <nav
-      className="navbar navbar-dark navbar-expand-lg"
+      className="navbar navbar-dark navbar-expand-lg sticky-top"
       style={{ backgroundColor: "#2f0141",
         boxShadow: "0 4px 10px rgb(0, 0, 0)"
       }}

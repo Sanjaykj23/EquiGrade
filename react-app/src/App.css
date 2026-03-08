@@ -9,8 +9,13 @@
   border-color: #5b21b6 !important;
   color: white !important;
 }
-body{
-    background: radial-gradient( #1E1B4B 0%, #0F172A 100%) !important;
+body {
+  margin: 0;
+  background-image: url("C:\Foss\EquiGrade\react-app\public\background.jpg");
+  background-size: cover;      
+  background-repeat: no-repeat; 
+  background-position: center;  
+  min-height: 100vh;
 }
 .card{
   transition:ease-in-out 0.4s;
@@ -19,4 +24,14 @@ body{
   transform: scale(1.1);
   color:white;
   background-color:#2f0141 ;
+}
+.footer{
+    display:flex;
+    justify-content: center;
+    background-color:navy;
+    border-radius: 8px;
+    box-shadow:0 0 8px black;
+    color: white;
+    text-align:center;
+    padding:20px;
 }
