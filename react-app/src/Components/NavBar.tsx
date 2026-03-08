@@ -12,7 +12,7 @@ function NavBar() {
           <img
             src="/logo.png"
             alt="Logo"
-            width="29%"
+            width="32%"
             height="9%"
             className="d-inline-block align-text-top"
           />
