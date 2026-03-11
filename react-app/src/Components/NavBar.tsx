@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 function NavBar() {
   return (
     <nav
@@ -30,11 +31,11 @@ function NavBar() {
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
-              <a className="nav-link active" href="#" >Home</a>
+              <Link className="nav-link" to="/">Home</Link>
             </li>
 
             <li className="nav-item">
-              <a className="nav-link" href="#" >Normalise Cutoff</a>
+              <Link className="nav-link" to="/normalise">Normalise Cutoff</Link>
             </li>
 
             <li className="nav-item">

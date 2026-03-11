@@ -1,19 +1,14 @@
-import NavBar from './Components/NavBar';
-import HeroH from './Components/HeroH';
-import Cards from './Components/Cards';
-import Cta from './Components/Cta';
-import Footer from './Components/Footer';
-function App() {
+import { BrowserRouter,Routes,Route} from "react-router-dom";
+import Home from "./pages/Home";
+import NormaliseQP from "./pages/NormaliseQP";
+function App(){
   return (
-    <div>
-      <NavBar />
-      <HeroH />
-      <Cards />
-      <em><h4 style={{margin:"40px" ,color:"white",display:"flex",justifyContent:'center',marginBottom:'-10px'}}>Start Fair Evaluation Today</h4></em>
-      <Cta />
-      <Footer />
-    </div>
+    <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Home />}/>
+      <Route path="/normalise" element ={<NormaliseQP />}/>
+    </Routes>
+    </BrowserRouter>
   );
 }
-
 export default App;

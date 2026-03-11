@@ -35,3 +35,22 @@ body {
     text-align:center;
     padding:20px;
 }
+.File1{
+  margin:100px;
+  margin-top: 20px;
+  padding:10px;
+  font-family: poppins;
+  color:wheat;
+}
+.head{
+  background-color: #5b21b6;
+  padding:20px;
+  margin-top:15px;
+  border-radius:10px;
+  box-shadow:0 0 8px black;
+  transition: ease-in-out 0.4s;
+}
+.head:hover{
+  transform:scale(1.05);
+  background-color: #2f0141;
+}
