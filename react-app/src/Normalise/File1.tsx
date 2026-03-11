@@ -1,3 +1,4 @@
+import UploadQP from "../Normalise/UploadQP";
 function File1() {
   return (
     <div className="File1">
@@ -10,6 +11,7 @@ function File1() {
       </div>
       <div className="head">
         <h3>Upload The Question Paper</h3>
+        <UploadQP />
       </div>
     </div>
   );

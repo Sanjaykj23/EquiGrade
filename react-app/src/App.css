@@ -51,6 +51,6 @@ body {
   transition: ease-in-out 0.4s;
 }
 .head:hover{
-  transform:scale(1.05);
+  transform:scale(1.02);
   background-color: #2f0141;
 }
