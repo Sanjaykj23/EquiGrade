@@ -109,7 +109,7 @@ function UploadQP() {
         />
         {mathsFile && <p>Uploaded: {mathsFile.name}</p>}
       </div>
-      <button className="btn btn-lg me-3 btn-purple" onClick={handleNormalize}>Normalize</button>
+      <button className="btn-purple btn btn-lg" onClick={handleNormalize}>Normalize</button>
     </div>
   );
 }

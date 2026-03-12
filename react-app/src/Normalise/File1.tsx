@@ -9,7 +9,7 @@ function File1() {
           on exam difficulty across different boards.
         </h4>
       </div>
-      <div className="head">
+      <div className="head1">
         <h3>Upload The Question Paper</h3>
         <UploadQP />
       </div>

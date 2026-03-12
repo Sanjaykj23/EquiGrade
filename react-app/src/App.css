@@ -43,7 +43,15 @@ body {
   color:wheat;
 }
 .head{
-  background-color: #5b21b6;
+  background: linear-gradient(135deg,#7a0c0c,#a31212);
+  padding:20px;
+  margin-top:15px;
+  border-radius:10px;
+  box-shadow:0 0 8px black;
+  transition: ease-in-out 0.4s;
+}
+.head1{
+  background: linear-gradient(135deg,#7a0c0c,#a31212);
   padding:20px;
   margin-top:15px;
   border-radius:10px;
@@ -51,6 +59,7 @@ body {
   transition: ease-in-out 0.4s;
 }
 .head:hover{
-  transform:scale(1.02);
-  background-color: #2f0141;
+  background: linear-gradient(135deg,#2c003e,#54006d);
+  transform: translateY(-5px);
+  box-shadow: 0 12px 35px rgba(0,0,0,0.6);
 }

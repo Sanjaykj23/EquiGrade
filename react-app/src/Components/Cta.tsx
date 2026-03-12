@@ -1,12 +1,13 @@
+import { Link } from "react-router-dom";
 function Cta() {
   return (
     <div className="d-flex justify-content-center mt-4">
-      <button
+      <Link className="nav-link" to="/normalise"><button
         type="button"
         className="btn btn-lg me-3 btn-purple"
       >
         Normalise cutoff
-      </button>
+      </button></Link>
 
       <button
         type="button"
