@@ -49,6 +49,31 @@ function UploadQP() {
 
     setMathsFile(file);
   };
+  const handleNormalize = async () => {
+    if (!chemistryFile || !physicsFile || !mathsFile) {
+      alert("Please upload all three question papers");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("chemistry", chemistryFile);
+    formData.append("physics", physicsFile);
+    formData.append("maths", mathsFile);
+
+    try {
+      const response = await fetch("http://localhost:5000/normalize", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+      console.log(data);
+
+      alert("Normalization completed!");
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div>
@@ -84,6 +109,7 @@ function UploadQP() {
         />
         {mathsFile && <p>Uploaded: {mathsFile.name}</p>}
       </div>
+      <button className="btn btn-lg me-3 btn-purple" onClick={handleNormalize}>Normalize</button>
     </div>
   );
 }
