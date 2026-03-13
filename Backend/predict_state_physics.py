@@ -13,9 +13,8 @@ from sentence_transformers import SentenceTransformer
 # FILE PATHS
 # -------------------------
 
-PDF_PATH = "2023_public.pdf"
-
-POPPLER_PATH = r"C:\Users\kjsan\Downloads\poppler-25.12.0\Library\bin"
+PDF_PATH = "2022_public.pdf"
+POPPLER_PATH = r"C:\EquiGrade\poppler-25.12.0\Library\bin"
 
 
 # -------------------------
@@ -27,7 +26,6 @@ print("Loading models...")
 embed_model = SentenceTransformer("all-MiniLM-L6-v2")
 
 kmeans = joblib.load("physics_cluster_model.pkl")
-
 score_model = joblib.load("physics_score_model.pkl")
 
 index = faiss.read_index("physics_vector_index.faiss")
@@ -38,7 +36,7 @@ index = faiss.read_index("physics_vector_index.faiss")
 # -------------------------
 
 ocr = PaddleOCR(
-    use_angle_cls=True,
+    use_textline_orientation=True,
     lang="en"
 )
 
@@ -49,30 +47,20 @@ ocr = PaddleOCR(
 
 def preprocess(img):
 
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    if len(img.shape) == 2:
+        img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
 
-    blur = cv2.GaussianBlur(gray, (5,5), 0)
-
-    thresh = cv2.adaptiveThreshold(
-        blur,
-        255,
-        cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
-        cv2.THRESH_BINARY,
-        11,
-        2
-    )
-
-    return thresh
+    return img
 
 
 # -------------------------
 # PDF → TEXT
 # -------------------------
 
-def extract_pdf_text(pdf):
+def extract_pdf_text(pdf_path):
 
     images = convert_from_path(
-        pdf,
+        pdf_path,
         poppler_path=POPPLER_PATH
     )
 
@@ -86,8 +74,10 @@ def extract_pdf_text(pdf):
 
         result = ocr.ocr(img)
 
-        for line in result[0]:
+        if result is None:
+            continue
 
+        for line in result[0]:
             text += line[1][0] + "\n"
 
     return text
@@ -114,13 +104,10 @@ def clean_text(text):
 
         if "padasalai" in l:
             continue
-
         if "gmail" in l:
             continue
-
         if "www." in l:
             continue
-
         if "cbsetips" in l:
             continue
 
@@ -161,7 +148,7 @@ def detect_repeated(vectors):
 
     for v in vectors:
 
-        v = np.array([v]).astype("float32")
+        v = np.array([v], dtype="float32")
 
         D, I = index.search(v, 1)
 
@@ -187,9 +174,12 @@ questions = split_questions(cleaned)
 
 print("\nQuestions detected:", len(questions))
 
+if len(questions) == 0:
+    print("No questions detected from the PDF.")
+    exit()
+
 
 for i, q in enumerate(questions[:10]):
-
     print(f"\nQ{i+1}: {q[:120]}")
 
 
@@ -198,7 +188,6 @@ for i, q in enumerate(questions[:10]):
 # -------------------------
 
 vectors = embed_model.encode(questions)
-
 vectors = np.array(vectors).astype("float32")
 
 
@@ -229,7 +218,6 @@ print("\nRepeated questions:", repeated)
 # -------------------------
 
 avg_length = np.mean([len(q) for q in questions])
-
 
 features = [[
     easy,
