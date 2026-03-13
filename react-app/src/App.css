@@ -11,7 +11,7 @@
 }
 body {
   margin: 0;
-  background-image: url("C:\Foss\EquiGrade\react-app\public\background.jpg");
+  background-image: url("C:\Foss\EquiGrade\react-app\public\background.png");
   background-size: cover;      
   background-repeat: no-repeat; 
   background-position: center;  
@@ -43,7 +43,7 @@ body {
   color:wheat;
 }
 .head{
-  background: linear-gradient(135deg,#7a0c0c,#a31212);
+  background: linear-gradient(135deg,#54006d,#2c003e);
   padding:20px;
   margin-top:15px;
   border-radius:10px;
@@ -51,7 +51,7 @@ body {
   transition: ease-in-out 0.4s;
 }
 .head1{
-  background: linear-gradient(135deg,#7a0c0c,#a31212);
+  background: linear-gradient(135deg,#54006d,#2c003e);
   padding:20px;
   margin-top:15px;
   border-radius:10px;
