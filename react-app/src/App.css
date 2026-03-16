@@ -63,3 +63,119 @@ body {
   transform: translateY(-5px);
   box-shadow: 0 12px 35px rgba(0,0,0,0.6);
 }
+.upload-page-wrapper {
+  padding: 40px 20px;
+}
+
+.main-page-title {
+  font-size: 2.2rem;
+  color: #f5deb3; /* Wheat color from image */
+  margin-left: 20px;
+  margin-bottom: 50px;
+  font-weight: 500;
+}
+
+.upload-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-title {
+  text-align: center;
+  color: #f5deb3;
+  font-size: 1.8rem;
+  margin-bottom: 30px;
+}
+
+/* Upload Cards Section */
+.upload-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-bottom: 60px;
+}
+
+.upload-card {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.upload-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+.upload-card h4 {
+  color: #f5deb3; /* Wheat text */
+  background: #2f0141; /* Contrast bg for the text */
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.upload-card input[type="file"] {
+  width: 100%;
+  font-size: 0.9rem;
+}
+
+.file-name {
+  margin-top: 15px;
+  color: #28a745;
+  font-weight: bold;
+}
+
+/* Marks Grid Section */
+.marks-section {
+  margin-bottom: 50px;
+}
+
+.marks-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.marks-grid input {
+  padding: 15px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  outline: none;
+  font-size: 1rem;
+  background: white;
+  color: #333;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.marks-grid input:focus {
+  border-color: #6a5acd;
+  transform: scale(1.02);
+}
+
+/* Button Styling */
+.normalize-btn {
+  display: block;
+  margin: 40px auto;
+  padding: 15px 60px;
+  background: #6a5acd;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+  box-shadow: 0 5px 15px rgba(106, 90, 205, 0.4);
+}
+
+.normalize-btn:hover {
+  background: #5746c7;
+  transform: translateY(-2px);
+}
