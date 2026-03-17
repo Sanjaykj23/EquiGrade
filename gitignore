@@ -1,1 +1,10 @@
-Dataset/
+Backend/venv/
+node_modules/
+.Dataset/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+.DS_Store
