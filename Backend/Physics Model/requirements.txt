@@ -1,8 +1,0 @@
-opencv-python
-numpy
-faiss-cpu
-paddleocr
-pdf2image
-sentence-transformers
-joblib
-pandas
