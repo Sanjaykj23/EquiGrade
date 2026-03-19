@@ -179,3 +179,31 @@ body {
   background: #5746c7;
   transform: translateY(-2px);
 }
+.board-dropdown-section {
+  margin-bottom: 20px;
+}
+
+.board-dropdown {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+/* Hover effect */
+.board-dropdown:hover {
+  border-color: #2563eb;
+  background: #eef2ff;
+}
+
+/* Focus effect */
+.board-dropdown:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 6px rgba(37, 99, 235, 0.4);
+  background: #ffffff;
+}

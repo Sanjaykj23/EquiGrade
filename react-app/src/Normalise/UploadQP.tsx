@@ -12,6 +12,9 @@ const UploadQP: React.FC = () => {
   const [physicsMarks, setPhysicsMarks] = useState("");
   const [mathsMarks, setMathsMarks] = useState("");
 
+  // Board State
+  const [board, setBoard] = useState("");
+
   const handleFileUpload = (
     event: React.ChangeEvent<HTMLInputElement>,
     subject: string
@@ -34,12 +37,19 @@ const UploadQP: React.FC = () => {
       alert("Please upload all question papers");
       return;
     }
+
     if (!chemistryMarks || !physicsMarks || !mathsMarks) {
       alert("Please enter all marks");
       return;
     }
 
+    if (!board) {
+      alert("Please select your board");
+      return;
+    }
+
     const formData = new FormData();
+    formData.append("board", board);
     formData.append("chemistry", chemistryFile);
     formData.append("physics", physicsFile);
     formData.append("maths", mathsFile);
@@ -52,6 +62,7 @@ const UploadQP: React.FC = () => {
         method: "POST",
         body: formData,
       });
+
       const data = await response.json();
       console.log(data);
       alert("Normalization Completed!");
@@ -63,10 +74,25 @@ const UploadQP: React.FC = () => {
 
   return (
     <div className="upload-page-wrapper">
-
       <div className="upload-container">
 
+        {/* ✅ Board Selection (FIXED POSITION) */}
+        <div className="board-dropdown-section">
+          <h3 className="section-title">Select Board</h3>
+
+          <select
+            className="board-dropdown"
+            value={board}
+            onChange={(e) => setBoard(e.target.value)}
+          >
+            <option value="">-- Choose Board --</option>
+            <option value="STATE_BOARD">State Board</option>
+            <option value="CBSE">CBSE</option>
+          </select>
+        </div>
+
         {/* Upload Section */}
+        <h3 className="section-title">Upload Question Paper</h3>
         <div className="upload-section">
           <div className="upload-card">
             <h4>Chemistry Question Paper</h4>
