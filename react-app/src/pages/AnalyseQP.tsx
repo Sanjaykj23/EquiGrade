@@ -1,22 +1,18 @@
 import React from 'react';
 import { Navbar } from '../Components/common/Navbar';
-import { Hero } from '../Components/home/Hero';
-import { ProblemStatement } from '../Components/home/ProblemStatement';
-import { FeatureGrid } from '../Components/home/FeatureGrid';
 import { Footer } from '../Components/common/Footer';
+import { QPAnalyzer } from '../Components/analyse/QPAnalyzer';
 
-const Home: React.FC = () => {
+const AnalyseQP: React.FC = () => {
   return (
     <div className="d-flex flex-column min-vh-100">
       <Navbar />
       <main className="flex-grow-1">
-        <Hero />
-        <ProblemStatement />
-        <FeatureGrid />
+        <QPAnalyzer />
       </main>
       <Footer />
     </div>
   );
 };
 
-export default Home;
+export default AnalyseQP;
