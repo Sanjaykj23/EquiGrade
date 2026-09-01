@@ -15,11 +15,11 @@ export const MarksInputGrid: React.FC<MarksInputGridProps> = ({
   const getIcon = (key: string) => {
     switch (key) {
       case 'maths':
-        return <Calculator size={18} className="text-blue" style={{ color: '#3b82f6' }} />;
+        return <Calculator size={18} style={{ color: '#2563eb' }} />;
       case 'physics':
-        return <Zap size={18} className="text-purple" style={{ color: '#8b5cf6' }} />;
+        return <Zap size={18} style={{ color: '#7c3aed' }} />;
       case 'chemistry':
-        return <FlaskConical size={18} className="text-pink" style={{ color: '#ec4899' }} />;
+        return <FlaskConical size={18} style={{ color: '#db2777' }} />;
       default:
         return null;
     }
@@ -34,7 +34,7 @@ export const MarksInputGrid: React.FC<MarksInputGridProps> = ({
 
   return (
     <div className="mb-4">
-      <label className="form-label text-white fw-bold fs-6 mb-3 d-block">
+      <label className="form-label fw-bold fs-6 mb-3 d-block" style={{ color: '#0f172a' }}>
         Step 2: Enter Board Raw Marks (Out of 100)
       </label>
 
@@ -45,7 +45,7 @@ export const MarksInputGrid: React.FC<MarksInputGridProps> = ({
               <div className="d-flex align-items-center justify-content-between mb-2">
                 <div className="d-flex align-items-center gap-2">
                   {getIcon(sub.key)}
-                  <span className="fw-semibold text-white">{sub.name}</span>
+                  <span className="fw-semibold" style={{ color: '#0f172a' }}>{sub.name}</span>
                 </div>
                 <span className="badge-tag badge-purple">Max: 100</span>
               </div>

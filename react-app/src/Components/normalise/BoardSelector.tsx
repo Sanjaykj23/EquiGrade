@@ -14,7 +14,7 @@ export const BoardSelector: React.FC<BoardSelectorProps> = ({
 }) => {
   return (
     <div className="mb-4">
-      <label className="form-label text-white fw-bold fs-6 mb-3 d-block">
+      <label className="form-label fw-bold fs-6 mb-3 d-block" style={{ color: '#0f172a' }}>
         Step 1: Select Secondary Education Board
       </label>
       
@@ -24,22 +24,23 @@ export const BoardSelector: React.FC<BoardSelectorProps> = ({
           return (
             <div key={board.value} className="col-md-4">
               <div
-                className={`glass-panel p-3 h-100 cursor-pointer border ${
-                  isSelected ? 'border-purple border-2 bg-purple-subtle' : ''
+                className={`glass-panel p-3 h-100 cursor-pointer ${
+                  isSelected ? 'shadow-sm' : ''
                 }`}
                 style={{
                   cursor: 'pointer',
-                  borderColor: isSelected ? '#8b5cf6' : undefined,
-                  background: isSelected ? 'rgba(139, 92, 246, 0.25)' : undefined
+                  borderColor: isSelected ? '#2563eb' : '#e2e8f0',
+                  borderWidth: isSelected ? '2px' : '1px',
+                  background: isSelected ? '#eff6ff' : '#ffffff'
                 }}
                 onClick={() => onSelectBoard(board.value)}
               >
                 <div className="d-flex align-items-center justify-content-between mb-2">
                   <span className="badge-tag badge-purple">{board.badge}</span>
-                  {isSelected && <CheckCircle2 size={18} className="text-purple" style={{ color: '#c084fc' }} />}
+                  {isSelected && <CheckCircle2 size={18} style={{ color: '#2563eb' }} />}
                 </div>
-                <h6 className="fw-bold text-white mb-1">{board.label}</h6>
-                <p className="mb-0" style={{ fontSize: '0.8rem', lineHeight: '1.4', color: '#cbd5e1' }}>
+                <h6 className="fw-bold mb-1" style={{ color: '#0f172a' }}>{board.label}</h6>
+                <p className="mb-0" style={{ fontSize: '0.825rem', lineHeight: '1.5', color: '#475569' }}>
                   {board.description}
                 </p>
               </div>

@@ -9,19 +9,19 @@ export const Navbar: React.FC = () => {
 
   return (
     <header className="sticky-top nav-custom">
-      <div className="container-fluid px-4 py-2 d-flex align-items-center justify-content-between">
+      <div className="container-fluid px-4 py-2.5 d-flex align-items-center justify-content-between">
         
         {/* Brand Logo & Title */}
         <Link to="/" className="d-flex align-items-center gap-3 text-decoration-none">
-          <div className="d-flex align-items-center justify-content-center rounded-3 p-2" style={{ background: 'linear-gradient(135deg, #8b5cf6, #3b82f6)' }}>
-            <Award className="text-white" size={24} />
+          <div className="d-flex align-items-center justify-content-center rounded-3 p-2 shadow-sm" style={{ background: 'linear-gradient(135deg, #2563eb, #4f46e5)' }}>
+            <Award className="text-white" size={22} />
           </div>
           <div>
             <div className="d-flex align-items-center gap-2">
-              <span className="fs-5 fw-bold text-white tracking-wide">EquiGrade</span>
-              <span className="badge-tag badge-purple d-none d-sm-inline-block">AI Normalization</span>
+              <span className="fs-5 fw-bold tracking-tight" style={{ color: '#0f172a', fontFamily: "'Outfit', sans-serif" }}>EquiGrade</span>
+              <span className="badge-tag badge-purple d-none d-sm-inline-block">TNEA Equating Logic</span>
             </div>
-            <small className="d-block" style={{ fontSize: '0.75rem', color: '#cbd5e1' }}>Cross-Board Competency & TNEA Equating</small>
+            <small className="d-block text-muted" style={{ fontSize: '0.75rem', color: '#64748b' }}>AI-Driven Cross-Board Mark Normalization</small>
           </div>
         </Link>
 
@@ -54,9 +54,9 @@ export const Navbar: React.FC = () => {
 
         {/* Quick Action Badge */}
         <div className="d-none d-lg-flex align-items-center gap-2">
-          <div className="px-3 py-1.5 rounded-pill glass-panel d-flex align-items-center gap-2" style={{ fontSize: '0.85rem' }}>
-            <Sparkles size={14} className="text-warning" />
-            <span style={{ color: '#cbd5e1' }}>TNEA 2026 Ready</span>
+          <div className="px-3 py-1.5 rounded-pill bg-white border border-light shadow-sm d-flex align-items-center gap-2" style={{ fontSize: '0.85rem' }}>
+            <Sparkles size={14} style={{ color: '#d97706' }} />
+            <span className="fw-medium" style={{ color: '#334155' }}>Anna University TNEA 2026</span>
           </div>
         </div>
 

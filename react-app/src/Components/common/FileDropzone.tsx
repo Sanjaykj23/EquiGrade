@@ -21,13 +21,13 @@ export const FileDropzone: React.FC<FileDropzoneProps> = ({
   const getIcon = () => {
     switch (subject) {
       case 'maths':
-        return <Calculator size={28} className="text-blue" style={{ color: '#60a5fa' }} />;
+        return <Calculator size={28} style={{ color: '#2563eb' }} />;
       case 'physics':
-        return <Zap size={28} className="text-purple" style={{ color: '#c084fc' }} />;
+        return <Zap size={28} style={{ color: '#7c3aed' }} />;
       case 'chemistry':
-        return <FlaskConical size={28} className="text-pink" style={{ color: '#f472b6' }} />;
+        return <FlaskConical size={28} style={{ color: '#db2777' }} />;
       default:
-        return <FileText size={28} className="text-white" />;
+        return <FileText size={28} style={{ color: '#475569' }} />;
     }
   };
 
@@ -92,11 +92,11 @@ export const FileDropzone: React.FC<FileDropzoneProps> = ({
       >
         {!file ? (
           <>
-            <div className="mb-3 p-3 rounded-circle" style={{ background: 'rgba(255, 255, 255, 0.08)' }}>
+            <div className="mb-3 p-3 rounded-circle" style={{ background: '#ffffff', boxShadow: '0 2px 8px rgba(15,23,42,0.06)' }}>
               {getIcon()}
             </div>
-            <h6 className="text-white fw-bold mb-1">{title}</h6>
-            <p className="small mb-3" style={{ color: '#cbd5e1' }}>Drag & drop exam PDF or click to browse</p>
+            <h6 className="fw-bold mb-1" style={{ color: '#0f172a' }}>{title}</h6>
+            <p className="small mb-3" style={{ color: '#64748b' }}>Drag & drop exam PDF or click to browse</p>
             <button
               type="button"
               className="btn btn-sm btn-secondary-glass py-1.5 px-3"
@@ -105,24 +105,24 @@ export const FileDropzone: React.FC<FileDropzoneProps> = ({
                 inputRef.current?.click();
               }}
             >
-              <Upload size={14} /> Upload PDF
+              <Upload size={14} /> Select PDF
             </button>
           </>
         ) : (
           <div className="w-100 text-center">
-            <div className="d-flex align-items-center justify-content-center gap-2 mb-2 text-success">
-              <CheckCircle2 size={22} style={{ color: '#34d399' }} />
-              <span className="fw-bold text-white small">PDF Attached</span>
+            <div className="d-flex align-items-center justify-content-center gap-2 mb-2" style={{ color: '#059669' }}>
+              <CheckCircle2 size={22} />
+              <span className="fw-bold small" style={{ color: '#0f172a' }}>PDF Attached</span>
             </div>
-            <div className="bg-dark bg-opacity-75 p-2 rounded-3 mb-2 border border-secondary">
-              <div className="text-truncate text-white small fw-medium" title={file.name}>
+            <div className="bg-white p-2 rounded-3 mb-2 border border-light shadow-sm">
+              <div className="text-truncate small fw-medium" style={{ color: '#0f172a' }} title={file.name}>
                 {file.name}
               </div>
-              <small style={{ color: '#cbd5e1' }}>{formatFileSize(file.size)}</small>
+              <small style={{ color: '#64748b' }}>{formatFileSize(file.size)}</small>
             </div>
             <button
               type="button"
-              className="btn btn-sm btn-outline-danger border-0 text-danger-emphasis py-1 px-2"
+              className="btn btn-sm btn-outline-danger border-0 py-1 px-2"
               onClick={(e) => {
                 e.stopPropagation();
                 onFileSelect(null);

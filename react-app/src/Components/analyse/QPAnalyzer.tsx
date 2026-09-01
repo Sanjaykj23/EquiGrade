@@ -41,8 +41,8 @@ export const QPAnalyzer: React.FC = () => {
       {/* Header */}
       <div className="text-center max-w-2xl mx-auto mb-5">
         <span className="badge-tag badge-purple mb-2 d-inline-block">PaddleOCR + Bloom's Taxonomy</span>
-        <h1 className="fs-1 fw-bold text-white mb-3">Question Paper Difficulty Analyzer</h1>
-        <p className="text-muted">
+        <h1 className="fs-1 fw-bold mb-3" style={{ color: '#0f172a' }}>Question Paper Difficulty Analyzer</h1>
+        <p className="fs-6" style={{ color: '#475569', maxWidth: '650px', margin: '0 auto' }}>
           Upload any examination paper PDF to extract question difficulty vectors, Bloom's cognitive taxonomy breakdown, and complexity index scores.
         </p>
       </div>
@@ -51,10 +51,10 @@ export const QPAnalyzer: React.FC = () => {
         
         {/* Upload & Run Column */}
         <div className="col-lg-6">
-          <div className="glass-panel p-4 h-100 d-flex flex-column justify-content-between">
+          <div className="glass-panel p-4 h-100 d-flex flex-column justify-content-between bg-white">
             <div>
-              <h5 className="fw-bold text-white mb-3 d-flex align-items-center gap-2">
-                <FileText size={20} className="text-purple" style={{ color: '#8b5cf6' }} />
+              <h5 className="fw-bold mb-3 d-flex align-items-center gap-2" style={{ color: '#0f172a' }}>
+                <FileText size={20} style={{ color: '#2563eb' }} />
                 Upload Question Paper (PDF)
               </h5>
 
@@ -70,15 +70,15 @@ export const QPAnalyzer: React.FC = () => {
                 />
                 {!selectedFile ? (
                   <div className="py-4">
-                    <Upload size={32} className="text-purple mb-2" style={{ color: '#8b5cf6' }} />
-                    <h6 className="text-white fw-semibold mb-1">Click to select PDF or Drag & Drop</h6>
-                    <small className="text-muted">Supports CBSE, State Board, ICSE question papers</small>
+                    <Upload size={32} className="mb-2" style={{ color: '#2563eb' }} />
+                    <h6 className="fw-bold mb-1" style={{ color: '#0f172a' }}>Click to select PDF or Drag & Drop</h6>
+                    <small style={{ color: '#64748b' }}>Supports CBSE, State Board, ICSE question papers</small>
                   </div>
                 ) : (
                   <div className="py-3">
-                    <CheckCircle2 size={32} className="text-emerald mb-2" style={{ color: '#34d399' }} />
-                    <h6 className="text-white fw-bold mb-1">{selectedFile.name}</h6>
-                    <small className="text-muted">{(selectedFile.size / 1024).toFixed(1)} KB PDF file attached</small>
+                    <CheckCircle2 size={32} className="mb-2" style={{ color: '#059669' }} />
+                    <h6 className="fw-bold mb-1" style={{ color: '#0f172a' }}>{selectedFile.name}</h6>
+                    <small style={{ color: '#64748b' }}>{(selectedFile.size / 1024).toFixed(1)} KB PDF file attached</small>
                   </div>
                 )}
               </label>
@@ -106,44 +106,44 @@ export const QPAnalyzer: React.FC = () => {
 
         {/* Results Display Column */}
         <div className="col-lg-6">
-          <div className="glass-panel p-4 h-100">
-            <h5 className="fw-bold text-white mb-3 d-flex align-items-center gap-2">
-              <Brain size={20} className="text-blue" style={{ color: '#60a5fa' }} />
+          <div className="glass-panel p-4 h-100 bg-white">
+            <h5 className="fw-bold mb-3 d-flex align-items-center gap-2" style={{ color: '#0f172a' }}>
+              <Brain size={20} style={{ color: '#7c3aed' }} />
               QPDI Evaluation Report
             </h5>
 
             {!qpdiResult ? (
-              <div className="text-center py-5 text-muted">
-                <BarChart3 size={48} className="mb-3 opacity-25" />
+              <div className="text-center py-5" style={{ color: '#64748b' }}>
+                <BarChart3 size={48} className="mb-3 opacity-50" />
                 <p className="mb-0">Upload a paper on the left and click "Run QPDI NLP Analysis" to view difficulty parameters.</p>
               </div>
             ) : (
               <div className="d-flex flex-column gap-3">
-                <div className="stat-card">
+                <div className="stat-card" style={{ background: '#f8fafc', border: '1px solid #e2e8f0' }}>
                   <div className="d-flex justify-content-between align-items-center mb-2">
-                    <span className="text-muted small">Overall Paper Complexity Index</span>
+                    <span className="small fw-semibold" style={{ color: '#475569' }}>Overall Paper Complexity Index</span>
                     <span className="badge-tag badge-purple">{qpdiResult.complexityLabel}</span>
                   </div>
-                  <div className="display-6 fw-bold text-white mb-1">{qpdiResult.difficultyIndex}</div>
-                  <small className="text-muted">Scale 0.0 (Easy) to 1.0 (Highly Challenging)</small>
+                  <div className="display-6 fw-bold mb-1" style={{ color: '#0f172a' }}>{qpdiResult.difficultyIndex}</div>
+                  <small style={{ color: '#64748b' }}>Scale 0.0 (Easy) to 1.0 (Highly Challenging)</small>
                 </div>
 
-                <div className="stat-card">
-                  <h6 className="fw-bold text-white mb-3">Bloom's Cognitive Distribution</h6>
+                <div className="stat-card" style={{ background: '#f8fafc', border: '1px solid #e2e8f0' }}>
+                  <h6 className="fw-bold mb-3" style={{ color: '#0f172a' }}>Bloom's Cognitive Distribution</h6>
                   
                   <div className="d-flex align-items-center justify-content-between mb-2 small">
-                    <span className="text-emerald" style={{ color: '#34d399' }}>Easy Questions (Recall/Direct)</span>
-                    <strong className="text-white">{qpdiResult.easy} Questions</strong>
+                    <span style={{ color: '#059669', fontWeight: 600 }}>Easy Questions (Recall/Direct)</span>
+                    <strong style={{ color: '#0f172a' }}>{qpdiResult.easy} Questions</strong>
                   </div>
                   
                   <div className="d-flex align-items-center justify-content-between mb-2 small">
-                    <span className="text-blue" style={{ color: '#60a5fa' }}>Medium Questions (Understanding)</span>
-                    <strong className="text-white">{qpdiResult.medium} Questions</strong>
+                    <span style={{ color: '#2563eb', fontWeight: 600 }}>Medium Questions (Understanding)</span>
+                    <strong style={{ color: '#0f172a' }}>{qpdiResult.medium} Questions</strong>
                   </div>
 
                   <div className="d-flex align-items-center justify-content-between mb-2 small">
-                    <span className="text-pink" style={{ color: '#f472b6' }}>Hard Questions (Application & Synthesis)</span>
-                    <strong className="text-white">{qpdiResult.hard} Questions</strong>
+                    <span style={{ color: '#db2777', fontWeight: 600 }}>Hard Questions (Application & Synthesis)</span>
+                    <strong style={{ color: '#0f172a' }}>{qpdiResult.hard} Questions</strong>
                   </div>
                 </div>
               </div>

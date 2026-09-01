@@ -29,11 +29,11 @@ export const ScoreComparisonChart: React.FC<ScoreComparisonChartProps> = ({ resu
   ];
 
   return (
-    <div className="glass-panel p-4 h-100">
+    <div className="glass-panel p-4 h-100 bg-white">
       <div className="d-flex align-items-center justify-content-between mb-4">
         <div>
-          <h5 className="fw-bold text-white mb-1">Score Transformation Analytics</h5>
-          <p className="text-muted small mb-0">Comparison of Raw Score, AI Predicted Paper Mean, and Normalized Competency Score</p>
+          <h5 className="fw-bold mb-1" style={{ color: '#0f172a' }}>Score Transformation Analytics</h5>
+          <p className="small mb-0" style={{ color: '#64748b' }}>Comparison of Raw Score, AI Predicted Paper Mean, and Normalized Competency Score</p>
         </div>
         <span className="badge-tag badge-purple">Interactive Graph</span>
       </div>
@@ -41,21 +41,22 @@ export const ScoreComparisonChart: React.FC<ScoreComparisonChartProps> = ({ resu
       <div style={{ width: '100%', height: 320 }}>
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={chartData} margin={{ top: 20, right: 30, left: 0, bottom: 5 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255, 255, 255, 0.1)" />
-            <XAxis dataKey="subject" stroke="#94a3b8" />
-            <YAxis domain={[0, 100]} stroke="#94a3b8" />
+            <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+            <XAxis dataKey="subject" stroke="#64748b" tick={{ fill: '#334155' }} />
+            <YAxis domain={[0, 100]} stroke="#64748b" tick={{ fill: '#334155' }} />
             <Tooltip
               contentStyle={{
-                backgroundColor: '#0f172a',
-                borderColor: 'rgba(139, 92, 246, 0.3)',
+                backgroundColor: '#ffffff',
+                borderColor: '#cbd5e1',
                 borderRadius: '8px',
-                color: '#ffffff'
+                color: '#0f172a',
+                boxShadow: '0 4px 12px rgba(15, 23, 42, 0.1)'
               }}
             />
             <Legend wrapperStyle={{ paddingTop: '10px' }} />
-            <Bar dataKey="Raw" fill="#64748b" name="Raw Student Score" radius={[4, 4, 0, 0]} />
-            <Bar dataKey="PaperMean" fill="#3b82f6" name="AI Paper Mean (Difficulty)" radius={[4, 4, 0, 0]} />
-            <Bar dataKey="Normalized" fill="#8b5cf6" name="Normalized Competency Score (NCS)" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="Raw" fill="#94a3b8" name="Raw Student Score" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="PaperMean" fill="#2563eb" name="AI Paper Mean (Difficulty)" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="Normalized" fill="#7c3aed" name="Normalized Competency Score (NCS)" radius={[4, 4, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </div>

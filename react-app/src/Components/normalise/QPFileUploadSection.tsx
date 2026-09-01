@@ -14,7 +14,7 @@ export const QPFileUploadSection: React.FC<QPFileUploadSectionProps> = ({
 }) => {
   return (
     <div className="mb-4">
-      <label className="form-label text-white fw-bold fs-6 mb-3 d-block">
+      <label className="form-label fw-bold fs-6 mb-3 d-block" style={{ color: '#0f172a' }}>
         Step 3: Upload Exam Question Papers (PDF Format)
       </label>
 

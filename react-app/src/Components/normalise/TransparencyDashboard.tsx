@@ -4,7 +4,7 @@ import { computeCutoffSummary, generateQPDIBreakdown } from '../../utils/normali
 import { ScoreComparisonChart } from './ScoreComparisonChart';
 import { QPDIChart } from './QPDIChart';
 import { CollegePredictor } from './CollegePredictor';
-import { ArrowUpRight, Award, BarChart2, Brain, Building2, Download, Printer, RotateCcw, ShieldCheck, Sparkles } from 'lucide-react';
+import { BarChart2, Brain, Building2, Printer, RotateCcw, ShieldCheck } from 'lucide-react';
 
 interface TransparencyDashboardProps {
   board: BoardType;
@@ -39,7 +39,7 @@ export const TransparencyDashboard: React.FC<TransparencyDashboardProps> = ({
     <div className="py-4">
       
       {/* Top Banner & Audit Stamp */}
-      <div className="glass-panel p-4 mb-4">
+      <div className="glass-panel p-4 mb-4 bg-white">
         <div className="row align-items-center g-4">
           
           <div className="col-lg-7">
@@ -49,24 +49,24 @@ export const TransparencyDashboard: React.FC<TransparencyDashboardProps> = ({
               </span>
               <span className="badge-tag badge-purple">{board} Normalized</span>
             </div>
-            <h2 className="fs-2 fw-bold text-white mb-2">TNEA Normalized Competency Summary</h2>
-            <p className="text-muted small mb-0" style={{ maxWidth: '520px' }}>
+            <h2 className="fs-2 fw-bold mb-2" style={{ color: '#0f172a' }}>TNEA Normalized Competency Summary</h2>
+            <p className="small mb-0" style={{ color: '#475569', maxWidth: '520px' }}>
               Your raw mark score has been mathematically equated against overall board paper toughness using Z-score standardization and NLP Bloom taxonomy modeling.
             </p>
           </div>
 
           <div className="col-lg-5">
-            <div className="glass-panel-glow p-4 text-center">
-              <span className="text-muted small text-uppercase tracking-wider d-block mb-1">Normalized TNEA Cut-Off Score</span>
+            <div className="glass-panel-glow p-4 text-center bg-white border border-primary">
+              <span className="small text-uppercase tracking-wider d-block mb-1 font-heading fw-bold" style={{ color: '#64748b' }}>Normalized TNEA Cut-Off Score</span>
               
               <div className="d-flex align-items-baseline justify-content-center gap-2 mb-2">
                 <span className="display-4 fw-extrabold text-gradient">{summary.normalizedCutoff}</span>
-                <span className="fs-5 text-muted">/ 200</span>
+                <span className="fs-5" style={{ color: '#64748b' }}>/ 200</span>
               </div>
 
               <div className="d-flex align-items-center justify-content-center gap-3">
-                <div className="text-muted small">
-                  Raw Cutoff: <strong className="text-white">{summary.rawCutoff}</strong>
+                <div className="small" style={{ color: '#334155' }}>
+                  Raw Cutoff: <strong style={{ color: '#0f172a' }}>{summary.rawCutoff}</strong>
                 </div>
                 <div className={`badge-tag ${summary.cutoffDelta >= 0 ? 'badge-emerald' : 'badge-amber'}`}>
                   {summary.cutoffDelta >= 0 ? `+${summary.cutoffDelta}` : summary.cutoffDelta} Points Adjusted
@@ -87,32 +87,32 @@ export const TransparencyDashboard: React.FC<TransparencyDashboardProps> = ({
 
           return (
             <div key={subKey} className="col-md-4">
-              <div className="glass-panel p-4 h-100">
+              <div className="glass-panel p-4 h-100 bg-white">
                 <div className="d-flex align-items-center justify-content-between mb-3">
-                  <span className="fw-bold text-white text-capitalize fs-5">{subKey}</span>
+                  <span className="fw-bold text-capitalize fs-5" style={{ color: '#0f172a' }}>{subKey}</span>
                   <span className="badge-tag badge-purple">Max: 100</span>
                 </div>
 
                 <div className="d-flex align-items-end justify-content-between mb-3">
                   <div>
-                    <span className="text-muted extra-small d-block">Raw Mark</span>
-                    <span className="fs-4 fw-bold text-white">{res.raw}</span>
+                    <span className="small d-block" style={{ color: '#64748b' }}>Raw Mark</span>
+                    <span className="fs-4 fw-bold" style={{ color: '#0f172a' }}>{res.raw}</span>
                   </div>
 
                   <div className="text-center px-2">
-                    <span className="text-muted extra-small d-block">Paper Mean</span>
-                    <span className="fs-6 fw-semibold text-blue" style={{ color: '#60a5fa' }}>{res.paper_mean}</span>
+                    <span className="small d-block" style={{ color: '#64748b' }}>Paper Mean</span>
+                    <span className="fs-6 fw-bold" style={{ color: '#2563eb' }}>{res.paper_mean}</span>
                   </div>
 
                   <div className="text-end">
-                    <span className="text-muted extra-small d-block">Normalized</span>
-                    <span className="fs-4 fw-bold text-emerald" style={{ color: '#34d399' }}>{res.normalized}</span>
+                    <span className="small d-block" style={{ color: '#64748b' }}>Normalized</span>
+                    <span className="fs-4 fw-bold" style={{ color: '#059669' }}>{res.normalized}</span>
                   </div>
                 </div>
 
-                <div className="p-2 rounded-3 bg-dark bg-opacity-40 d-flex align-items-center justify-content-between text-muted extra-small">
+                <div className="p-2 rounded-3 bg-light d-flex align-items-center justify-content-between small" style={{ color: '#475569' }}>
                   <span>Equating Variance:</span>
-                  <strong className={delta >= 0 ? 'text-success' : 'text-warning'}>
+                  <strong style={{ color: delta >= 0 ? '#059669' : '#d97706' }}>
                     {delta >= 0 ? `+${delta}` : delta} Score Shift
                   </strong>
                 </div>
@@ -123,7 +123,7 @@ export const TransparencyDashboard: React.FC<TransparencyDashboardProps> = ({
       </div>
 
       {/* Interactive Tabs Section */}
-      <div className="d-flex align-items-center justify-content-between mb-3">
+      <div className="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
         <div className="d-flex align-items-center gap-2">
           <button
             type="button"
@@ -152,7 +152,7 @@ export const TransparencyDashboard: React.FC<TransparencyDashboardProps> = ({
           <button type="button" className="btn btn-sm btn-secondary-glass" onClick={handlePrintReport}>
             <Printer size={14} className="me-1" /> Print Report
           </button>
-          <button type="button" className="btn btn-sm btn-outline-purple text-white border-purple" onClick={onReset}>
+          <button type="button" className="btn btn-sm btn-outline-primary" onClick={onReset}>
             <RotateCcw size={14} className="me-1" /> Reset Form
           </button>
         </div>

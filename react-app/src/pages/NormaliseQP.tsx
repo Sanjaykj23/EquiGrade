@@ -9,7 +9,7 @@ import { TransparencyDashboard } from '../Components/normalise/TransparencyDashb
 import { BoardType, NormalizationResults, ProcessingStep, SubjectFiles, SubjectMarks, SubjectKey } from '../types';
 import { INITIAL_PROCESSING_STEPS } from '../config/constants';
 import { normalizeScores } from '../services/api';
-import { ArrowRight, Calculator, CheckCircle, Sparkles } from 'lucide-react';
+import { ArrowRight, Sparkles } from 'lucide-react';
 
 const NormaliseQP: React.FC = () => {
   const [board, setBoard] = useState<BoardType | ''>('');
@@ -84,8 +84,8 @@ const NormaliseQP: React.FC = () => {
         {/* Page Header */}
         <div className="text-center max-w-2xl mx-auto mb-5">
           <span className="badge-tag badge-purple mb-2 d-inline-block">EquiGrade Norm Engine</span>
-          <h1 className="fs-1 fw-bold text-white mb-2">TNEA Cutoff Normalization</h1>
-          <p className="fs-6" style={{ color: '#cbd5e1', maxWidth: '650px', margin: '0 auto' }}>
+          <h1 className="fs-1 fw-bold mb-2" style={{ color: '#0f172a' }}>TNEA Cutoff Normalization</h1>
+          <p className="fs-6" style={{ color: '#475569', maxWidth: '650px', margin: '0 auto' }}>
             Select your board, input your raw marks out of 100, and upload your question paper PDFs to calculate a truly fair, equated TNEA admission cut-off.
           </p>
         </div>
@@ -98,7 +98,7 @@ const NormaliseQP: React.FC = () => {
         )}
 
         {!results ? (
-          <div className="glass-panel p-4 p-md-5 max-w-4xl mx-auto">
+          <div className="glass-panel p-4 p-md-5 max-w-4xl mx-auto bg-white">
             <BoardSelector
               selectedBoard={board}
               onSelectBoard={setBoard}
@@ -114,7 +114,7 @@ const NormaliseQP: React.FC = () => {
               onFileSelect={handleFileSelect}
             />
 
-            <div className="text-center pt-3 border-top border-secondary border-opacity-25 mt-4">
+            <div className="text-center pt-3 border-top border-light mt-4">
               <button
                 type="button"
                 className="btn-primary-gradient fs-6 px-5 py-3"
