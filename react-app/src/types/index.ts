@@ -1,4 +1,4 @@
-export type BoardType = 'CBSE' | 'STATE_BOARD' | 'ICSE';
+export type BoardType = 'CBSE' | 'STATE_BOARD';
 
 export type SubjectKey = 'physics' | 'chemistry' | 'maths';
 
@@ -43,15 +43,24 @@ export interface QPDIBreakdown {
   complexityLabel: 'Easy' | 'Moderate' | 'Challenging' | 'Very High';
 }
 
-export interface CollegeMatch {
+export interface CourseEligibility {
+  code: string;
+  name: string;              // e.g. "B.E. Computer Science & Engineering"
+  cutoffRequired: number;    // e.g. 197.5
+  isEligible: boolean;       // true if student cutoff >= cutoffRequired - 2.5
+  confidence: 'High Probability' | 'Moderate Chance' | 'Reach Option';
+  category: 'Autonomous' | 'Aided' | 'Government' | 'Self-Financing';
+}
+
+export interface CollegePrediction {
   id: string;
-  name: string;
+  collegeName: string;
+  code: string;              // e.g. "TNEA Code: 0001"
   campus: string;
-  branch: string;
-  minCutoff: number;
-  category: 'Tier 1 Govt' | 'Tier 1 Aided' | 'Top Self-Financing';
-  matchPercentage: number;
   location: string;
+  category: 'Tier 1 Govt' | 'Tier 1 Aided' | 'Top Self-Financing';
+  overallMatchPercentage: number;
+  eligibleCourses: CourseEligibility[];
 }
 
 export interface ProcessingStep {

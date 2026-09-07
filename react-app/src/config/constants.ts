@@ -1,4 +1,4 @@
-import { BoardType, CollegeMatch, SubjectKey } from '../types';
+import { BoardType, CollegePrediction, SubjectKey } from '../types';
 
 export const BOARDS: { value: BoardType; label: string; description: string; badge: string }[] = [
   {
@@ -12,12 +12,6 @@ export const BOARDS: { value: BoardType; label: string; description: string; bad
     label: 'Tamil Nadu State Board (TNSB)',
     description: 'Textbook-direct evaluation with standard deviation ≈ 12',
     badge: 'State Baseline'
-  },
-  {
-    value: 'ICSE',
-    label: 'CISCE / ICSE',
-    description: 'Analytical depth focus with standard deviation ≈ 9',
-    badge: 'Council Standard'
   }
 ];
 
@@ -27,66 +21,103 @@ export const SUBJECTS: { key: SubjectKey; name: string; iconName: string; color:
   { key: 'chemistry', name: 'Chemistry', iconName: 'FlaskConical', color: '#ec4899', maxMarks: 100 }
 ];
 
-export const SAMPLE_COLLEGES: CollegeMatch[] = [
+export const TNEA_COLLEGE_DATABASE: CollegePrediction[] = [
   {
-    id: 'ceg-cse',
-    name: 'College of Engineering Guindy (CEG)',
-    campus: 'Anna University, Chennai',
-    branch: 'Computer Science & Engineering',
-    minCutoff: 198.5,
+    id: 'ceg-guindy',
+    collegeName: 'College of Engineering Guindy (CEG)',
+    code: 'TNEA Code: 0001',
+    campus: 'Anna University Campus',
+    location: 'Guindy, Chennai',
     category: 'Tier 1 Govt',
-    matchPercentage: 0,
-    location: 'Chennai'
+    overallMatchPercentage: 0,
+    eligibleCourses: [
+      { code: 'CSE', name: 'B.E. Computer Science & Engineering', cutoffRequired: 198.5, isEligible: false, confidence: 'High Probability', category: 'Government' },
+      { code: 'ECE', name: 'B.E. Electronics & Communication Engineering', cutoffRequired: 196.5, isEligible: false, confidence: 'High Probability', category: 'Government' },
+      { code: 'AI-DS', name: 'B.E. Artificial Intelligence & Data Science', cutoffRequired: 195.5, isEligible: false, confidence: 'High Probability', category: 'Government' },
+      { code: 'IT', name: 'B.Tech Information Technology', cutoffRequired: 196.0, isEligible: false, confidence: 'High Probability', category: 'Government' },
+      { code: 'EEE', name: 'B.E. Electrical & Electronics Engineering', cutoffRequired: 194.5, isEligible: false, confidence: 'High Probability', category: 'Government' },
+      { code: 'MECH', name: 'B.E. Mechanical Engineering', cutoffRequired: 191.0, isEligible: false, confidence: 'High Probability', category: 'Government' },
+      { code: 'BME', name: 'B.Tech Bio-Medical Engineering', cutoffRequired: 189.0, isEligible: false, confidence: 'High Probability', category: 'Government' },
+      { code: 'CIVIL', name: 'B.E. Civil Engineering', cutoffRequired: 186.0, isEligible: false, confidence: 'High Probability', category: 'Government' }
+    ]
   },
   {
-    id: 'ceg-ece',
-    name: 'College of Engineering Guindy (CEG)',
-    campus: 'Anna University, Chennai',
-    branch: 'Electronics & Communication',
-    minCutoff: 196.5,
+    id: 'mit-chromepet',
+    collegeName: 'Madras Institute of Technology (MIT)',
+    code: 'TNEA Code: 0004',
+    campus: 'Anna University Campus',
+    location: 'Chromepet, Chennai',
     category: 'Tier 1 Govt',
-    matchPercentage: 0,
-    location: 'Chennai'
+    overallMatchPercentage: 0,
+    eligibleCourses: [
+      { code: 'AERO', name: 'B.E. Aeronautical Engineering', cutoffRequired: 194.0, isEligible: false, confidence: 'High Probability', category: 'Government' },
+      { code: 'CSE', name: 'B.E. Computer Science & Engineering', cutoffRequired: 197.0, isEligible: false, confidence: 'High Probability', category: 'Government' },
+      { code: 'ROBOTICS', name: 'B.E. Robotics & Automation', cutoffRequired: 193.0, isEligible: false, confidence: 'High Probability', category: 'Government' },
+      { code: 'EIE', name: 'B.E. Electronics & Instrumentation Engineering', cutoffRequired: 191.5, isEligible: false, confidence: 'High Probability', category: 'Government' },
+      { code: 'AUTO', name: 'B.E. Automobile Engineering', cutoffRequired: 188.5, isEligible: false, confidence: 'High Probability', category: 'Government' },
+      { code: 'RPT', name: 'B.Tech Rubber & Plastics Technology', cutoffRequired: 184.0, isEligible: false, confidence: 'High Probability', category: 'Government' }
+    ]
   },
   {
-    id: 'mit-aero',
-    name: 'Madras Institute of Technology (MIT)',
-    campus: 'Anna University, Chromepet',
-    branch: 'Aeronautical Engineering',
-    minCutoff: 194.0,
-    category: 'Tier 1 Govt',
-    matchPercentage: 0,
-    location: 'Chennai'
-  },
-  {
-    id: 'psg-cse',
-    name: 'PSG College of Technology',
-    campus: 'Coimbatore',
-    branch: 'Computer Science & Engineering',
-    minCutoff: 195.5,
+    id: 'psg-tech',
+    collegeName: 'PSG College of Technology',
+    code: 'TNEA Code: 2006',
+    campus: 'Peelamedu Campus',
+    location: 'Coimbatore',
     category: 'Tier 1 Aided',
-    matchPercentage: 0,
-    location: 'Coimbatore'
+    overallMatchPercentage: 0,
+    eligibleCourses: [
+      { code: 'CSE', name: 'B.E. Computer Science & Engineering', cutoffRequired: 196.0, isEligible: false, confidence: 'High Probability', category: 'Aided' },
+      { code: 'CYBER', name: 'B.E. Cyber Security & Forensics', cutoffRequired: 194.5, isEligible: false, confidence: 'High Probability', category: 'Aided' },
+      { code: 'MCT', name: 'B.E. Mechatronics Engineering', cutoffRequired: 192.0, isEligible: false, confidence: 'High Probability', category: 'Aided' },
+      { code: 'MECH', name: 'B.E. Mechanical Engineering', cutoffRequired: 190.0, isEligible: false, confidence: 'High Probability', category: 'Aided' },
+      { code: 'FT', name: 'B.Tech Fashion Technology', cutoffRequired: 182.0, isEligible: false, confidence: 'High Probability', category: 'Aided' }
+    ]
   },
   {
-    id: 'ssn-it',
-    name: 'SSN College of Engineering',
-    campus: 'Kalavakkam, Chennai',
-    branch: 'Information Technology',
-    minCutoff: 192.5,
+    id: 'ssn-chennai',
+    collegeName: 'SSN College of Engineering',
+    code: 'TNEA Code: 1315',
+    campus: 'Kalavakkam Campus',
+    location: 'OMR, Chennai',
     category: 'Top Self-Financing',
-    matchPercentage: 0,
-    location: 'Chennai'
+    overallMatchPercentage: 0,
+    eligibleCourses: [
+      { code: 'CSE', name: 'B.E. Computer Science & Engineering', cutoffRequired: 194.5, isEligible: false, confidence: 'High Probability', category: 'Autonomous' },
+      { code: 'IT', name: 'B.Tech Information Technology', cutoffRequired: 192.5, isEligible: false, confidence: 'High Probability', category: 'Autonomous' },
+      { code: 'EEE', name: 'B.E. Electrical & Electronics Engineering', cutoffRequired: 189.0, isEligible: false, confidence: 'High Probability', category: 'Autonomous' },
+      { code: 'CHEM', name: 'B.Tech Chemical Engineering', cutoffRequired: 185.0, isEligible: false, confidence: 'High Probability', category: 'Autonomous' }
+    ]
   },
   {
-    id: 'cit-mech',
-    name: 'Coimbatore Institute of Technology (CIT)',
-    campus: 'Coimbatore',
-    branch: 'Mechanical Engineering',
-    minCutoff: 188.0,
+    id: 'cit-coimbatore',
+    collegeName: 'Coimbatore Institute of Technology (CIT)',
+    code: 'TNEA Code: 2005',
+    campus: 'Civil Aerodrome Post',
+    location: 'Coimbatore',
     category: 'Tier 1 Aided',
-    matchPercentage: 0,
-    location: 'Coimbatore'
+    overallMatchPercentage: 0,
+    eligibleCourses: [
+      { code: 'CSE', name: 'B.E. Computer Science & Engineering', cutoffRequired: 193.0, isEligible: false, confidence: 'High Probability', category: 'Aided' },
+      { code: 'MECH', name: 'B.E. Mechanical Engineering', cutoffRequired: 187.5, isEligible: false, confidence: 'High Probability', category: 'Aided' },
+      { code: 'CHEM', name: 'B.Tech Chemical Engineering', cutoffRequired: 184.5, isEligible: false, confidence: 'High Probability', category: 'Aided' },
+      { code: 'CIVIL', name: 'B.E. Civil Engineering', cutoffRequired: 183.0, isEligible: false, confidence: 'High Probability', category: 'Aided' }
+    ]
+  },
+  {
+    id: 'tce-madurai',
+    collegeName: 'Thiagarajar College of Engineering (TCE)',
+    code: 'TNEA Code: 5008',
+    campus: 'Tirupparankundram Campus',
+    location: 'Madurai',
+    category: 'Tier 1 Aided',
+    overallMatchPercentage: 0,
+    eligibleCourses: [
+      { code: 'CSE', name: 'B.E. Computer Science & Engineering', cutoffRequired: 194.0, isEligible: false, confidence: 'High Probability', category: 'Aided' },
+      { code: 'ECE', name: 'B.E. Electronics & Communication Engineering', cutoffRequired: 191.0, isEligible: false, confidence: 'High Probability', category: 'Aided' },
+      { code: 'IT', name: 'B.Tech Information Technology', cutoffRequired: 190.5, isEligible: false, confidence: 'High Probability', category: 'Aided' },
+      { code: 'MECH', name: 'B.E. Mechanical Engineering', cutoffRequired: 186.0, isEligible: false, confidence: 'High Probability', category: 'Aided' }
+    ]
   }
 ];
 

@@ -1,5 +1,5 @@
-import { CollegeMatch, NormalizationResults, QPDIBreakdown, SubjectKey, TNEACutoffSummary } from '../types';
-import { SAMPLE_COLLEGES } from '../config/constants';
+import { CollegePrediction, CourseEligibility, NormalizationResults, QPDIBreakdown, SubjectKey, TNEACutoffSummary } from '../types';
+import { TNEA_COLLEGE_DATABASE } from '../config/constants';
 
 /**
  * Calculates TNEA Cutoff (Out of 200)
@@ -65,26 +65,41 @@ export const generateQPDIBreakdown = (subject: SubjectKey, easy = 8, medium = 12
 };
 
 /**
- * Filters and ranks college eligibility based on normalized cutoff
+ * Computes college-by-college prediction with full list of eligible engineering courses
  */
-export const getCollegeMatches = (cutoff: number): CollegeMatch[] => {
-  return SAMPLE_COLLEGES.map(college => {
-    const diff = cutoff - college.minCutoff;
-    let matchPercentage = 0;
+export const getDetailedCollegePredictions = (studentCutoff: number): CollegePrediction[] => {
+  return TNEA_COLLEGE_DATABASE.map((college) => {
+    let eligibleCount = 0;
 
-    if (diff >= 5) {
-      matchPercentage = 99;
-    } else if (diff >= 0) {
-      matchPercentage = Math.min(98, 85 + Math.round(diff * 2.5));
-    } else if (diff >= -3) {
-      matchPercentage = Math.max(40, 75 + Math.round(diff * 10));
-    } else {
-      matchPercentage = Math.max(10, 35 + Math.round(diff * 5));
-    }
+    const evaluatedCourses: CourseEligibility[] = college.eligibleCourses.map((course) => {
+      const diff = studentCutoff - course.cutoffRequired;
+      const isEligible = diff >= -2.0; // Eligible if cutoff is within 2 points of required threshold
+
+      if (isEligible) eligibleCount++;
+
+      let confidence: 'High Probability' | 'Moderate Chance' | 'Reach Option' = 'Reach Option';
+      if (diff >= 1.5) {
+        confidence = 'High Probability';
+      } else if (diff >= -0.5) {
+        confidence = 'Moderate Chance';
+      }
+
+      return {
+        ...course,
+        isEligible,
+        confidence
+      };
+    }).sort((a, b) => b.cutoffRequired - a.cutoffRequired);
+
+    const overallMatchPercentage = Math.min(
+      99,
+      Math.max(15, Math.round((eligibleCount / college.eligibleCourses.length) * 100))
+    );
 
     return {
       ...college,
-      matchPercentage
+      overallMatchPercentage,
+      eligibleCourses: evaluatedCourses
     };
-  }).sort((a, b) => b.matchPercentage - a.matchPercentage);
+  }).sort((a, b) => b.overallMatchPercentage - a.overallMatchPercentage);
 };
