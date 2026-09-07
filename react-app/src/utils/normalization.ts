@@ -14,6 +14,7 @@ export const calculateTNEA = (maths: number, physics: number, chemistry: number)
 
 /**
  * Computes cut-off summary comparing raw cut-off against normalized cut-off
+ * Ensures the overall cutoff delta is strictly clamped within [-5.0, +5.0] points.
  */
 export const computeCutoffSummary = (
   results: NormalizationResults
@@ -27,13 +28,18 @@ export const computeCutoffSummary = (
   const normChem = results.chemistry?.normalized ?? rawChem;
 
   const rawCutoff = calculateTNEA(rawMaths, rawPhysics, rawChem);
-  const normalizedCutoff = calculateTNEA(normMaths, normPhysics, normChem);
-  const cutoffDelta = Number((normalizedCutoff - rawCutoff).toFixed(2));
+  const unconstrainedNormalized = calculateTNEA(normMaths, normPhysics, normChem);
+  
+  // Calculate raw delta and strictly clamp between [-5.0, +5.0]
+  const rawDelta = unconstrainedNormalized - rawCutoff;
+  const clampedDelta = Number((Math.max(-5.0, Math.min(5.0, rawDelta))).toFixed(2));
+  
+  const normalizedCutoff = Number((Math.min(200.0, Math.max(0.0, rawCutoff + clampedDelta))).toFixed(2));
 
   return {
     rawCutoff,
     normalizedCutoff,
-    cutoffDelta
+    cutoffDelta: clampedDelta
   };
 };
 
@@ -42,8 +48,8 @@ export const computeCutoffSummary = (
  */
 export const getComplexityLabel = (index: number): 'Easy' | 'Moderate' | 'Challenging' | 'Very High' => {
   if (index < 0.45) return 'Easy';
-  if (index < 0.65) return 'Moderate';
-  if (index < 0.82) return 'Challenging';
+  if (index < 0.62) return 'Moderate';
+  if (index < 0.78) return 'Challenging';
   return 'Very High';
 };
 
