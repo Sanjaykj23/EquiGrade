@@ -5,7 +5,7 @@ import joblib
 import numpy as np
 import os
 import re
-from utils.processor import analyze_document, embed_model, ocr
+from utils.processor import analyze_document, embed_model, ocr, extract_text_from_pdf_bytes, split_questions_advanced
 
 app = FastAPI(title="EquiGrade Normalization & QPDI API")
 
@@ -68,7 +68,6 @@ async def normalize_endpoint(
                 sd = 8 if board == "CBSE" else 12
                 
                 # Formula: Bounded adjustment strictly within [-5.0, +5.0] points
-                # Diff factor compares predicted paper mean with expected baseline (70.0)
                 diff_delta = (70.0 - predicted_mean) / 6.0
                 score_shift = ((raw_mark - predicted_mean) / (sd * 2.5)) * 3.0 + diff_delta
                 
@@ -94,50 +93,48 @@ async def normalize_endpoint(
 @app.post("/analyze-qp")
 async def analyze_qp_endpoint(
     file: UploadFile = File(...),
-    board: str = Form("STATE_BOARD")
+    board: str = Form("STATE_BOARD"),
+    manualSubject: str = Form("auto")
 ):
     try:
         file_bytes = await file.read()
+        file_name = file.filename.lower() if file.filename else ""
         
-        # 1. Extract Text via OCR
-        from pdf2image import convert_from_bytes
-        images = convert_from_bytes(file_bytes, dpi=200)
+        # 1. Extract Text via PyMuPDF (fitz) with OCR fallback
+        text = extract_text_from_pdf_bytes(file_bytes)
+        lower_text = text.lower() + " " + file_name
         
-        text = ""
-        for img in images:
-            res = ocr.ocr(np.array(img))
-            if res and res[0]:
-                for line in res[0]:
-                    text += line[1][0] + "\n"
+        # 2. Subject Auto-Detection or Manual Override
+        if manualSubject and manualSubject != "auto":
+            detected_subject = manualSubject.lower()
+        else:
+            phy_words = ['physics', 'physic', 'electric', 'magnetic', 'velocity', 'acceleration', 'force', 'current', 'charge', 'potential', 'resistance', 'optics', 'lens', 'frequency', 'wavelength', 'quantum', 'joule', 'volt', 'ampere', 'tesla', 'henry', 'farad', 'ohm', 'resistor', 'capacitor', 'circuit', 'galvanometer', 'refraction', 'reflection', 'photon', 'photoelectric', 'torque', 'momentum', 'kinetics', 'diffraction', 'interference']
+            chem_words = ['chemistry', 'chem', 'reaction', 'acid', 'alkali', 'element', 'molecule', 'organic', 'inorganic', 'compound', 'molar', 'molarity', 'normality', 'molality', 'valency', 'stoichiometry', 'polymer', 'titration', 'isomer', 'isomerism', 'benzene', 'phenol', 'ether', 'aldehyde', 'ketone', 'carboxylic', 'amine', 'haloalkane', 'electrochemistry', 'thermodynamics', 'enthalpy']
+            math_words = ['mathematics', 'math', 'maths', 'matrix', 'matrices', 'integral', 'integration', 'derivative', 'differentiation', 'differential', 'vector', 'vectors', 'probability', 'trigonometry', 'cosine', 'sine', 'tangent', 'determinant', 'calculus', 'algebra', 'geometry', 'parabola', 'hyperbola', 'ellipse', 'coordinate', 'eigenvalue', 'solve', 'evaluate', 'equation']
 
-        lower_text = text.lower()
-        
-        # 2. Subject Auto-Detection Keywords
-        chem_keywords = ["chem", "reaction", "acid", "base", "element", "atom", "molecule", "organic", "compound", "solution", "equilibrium", "polymer", "ion", "mole", "ph"]
-        phy_keywords = ["physic", "electric", "magnetic", "velocity", "acceleration", "force", "current", "charge", "potential", "resistance", "optics", "lens", "frequency", "wavelength", "quantum"]
-        math_keywords = ["math", "matrix", "matrices", "integral", "derivative", "differential", "vector", "probability", "triangle", "cosine", "sine", "tangent", "equation", "determinant"]
+            phy_count = sum(len(re.findall(r'\b' + re.escape(w) + r'\b', lower_text)) for w in phy_words) + (10 if ("phy" in file_name or "physics" in file_name) else 0)
+            chem_count = sum(len(re.findall(r'\b' + re.escape(w) + r'\b', lower_text)) for w in chem_words) + (10 if ("chem" in file_name or "chemistry" in file_name) else 0)
+            math_count = sum(len(re.findall(r'\b' + re.escape(w) + r'\b', lower_text)) for w in math_words) + (10 if ("math" in file_name or "maths" in file_name or "mathematics" in file_name) else 0)
 
-        chem_count = sum(lower_text.count(k) for k in chem_keywords)
-        phy_count = sum(lower_text.count(k) for k in phy_keywords)
-        math_count = sum(lower_text.count(k) for k in math_keywords)
-
-        detected_subject = "chemistry"
-        if phy_count > chem_count and phy_count > math_count:
-            detected_subject = "physics"
-        elif math_count > chem_count and math_count > phy_count:
-            detected_subject = "maths"
+            if phy_count > chem_count and phy_count > math_count:
+                detected_subject = "physics"
+            elif math_count > chem_count and math_count > phy_count:
+                detected_subject = "maths"
+            elif chem_count > phy_count and chem_count > math_count:
+                detected_subject = "chemistry"
+            else:
+                if "math" in file_name or "maths" in file_name:
+                    detected_subject = "maths"
+                elif "phy" in file_name or "physics" in file_name:
+                    detected_subject = "physics"
+                else:
+                    detected_subject = "chemistry"
             
-        # 3. Question Splitting
-        pattern = r"\n\s*\d{1,2}\.\s+" if board == "CBSE" else r'\n\s*\d+[\s\).\-]+'
-        questions = [q.strip() for q in re.split(pattern, text) if len(q.strip()) > 20]
-        
-        if not questions:
-            # Fallback if text is scanned image without regex split match
-            questions = [p.strip() for p in text.split("\n\n") if len(p.strip()) > 20]
-
+        # 3. Advanced Multi-Pass Question Extractor (Guarantees 15 to 45 questions scanned per paper)
+        questions = split_questions_advanced(text, board)
         total_questions = len(questions) if questions else 30
 
-        # 4. K-Means Bloom Clustering
+        # 4. K-Means Bloom Clustering & Score Model
         folder_prefix = "CBSC" if board == "CBSE" else "SB"
         file_prefix = "cbse_" if board == "CBSE" else ""
         
@@ -160,22 +157,28 @@ async def analyze_qp_endpoint(
             
             counts = np.bincount(clusters, minlength=3)
             easy, med, hard = int(counts[0]), int(counts[1]), int(counts[2])
-            diff_idx = (easy * 0.3 + med * 0.6 + hard * 1.0) / total_questions
+            diff_idx = (easy * 0.32 + med * 0.64 + hard * 1.0) / total_questions
         else:
-            easy, med, hard = 8, 14, 8
-            diff_idx = 0.62
+            easy = Math.max(4, int(total_questions * 0.3)) if 'Math' in globals() else int(total_questions * 0.3)
+            easy = int(total_questions * 0.3)
+            med = int(total_questions * 0.5)
+            hard = total_questions - (easy + med)
+            diff_idx = (easy * 0.32 + med * 0.64 + hard * 1.0) / total_questions
 
         predicted_mean = 70.0
         if os.path.exists(score_model_path):
             score_model = joblib.load(score_model_path)
-            avg_len = np.mean([len(q) for q in questions]) if questions else 120.0
-            features = [[easy, med, hard, 5, avg_len, diff_idx]]
+            avg_len = float(np.mean([len(q) for q in questions])) if questions else 120.0
+            features = [[easy, med, hard, 5, avg_len, float(diff_idx)]]
             predicted_mean = float(score_model.predict(features)[0])
+        else:
+            base_mean = 72.0 if board == "CBSE" else 75.0
+            predicted_mean = base_mean - (diff_idx - 0.5) * 15.0
 
         complexity_label = "Easy"
-        if diff_idx >= 0.75:
+        if diff_idx >= 0.78:
             complexity_label = "Very High"
-        elif diff_idx >= 0.62:
+        elif diff_idx >= 0.63:
             complexity_label = "Challenging"
         elif diff_idx >= 0.48:
             complexity_label = "Moderate"
@@ -193,15 +196,4 @@ async def analyze_qp_endpoint(
         }
     except Exception as e:
         print(f"Error in /analyze-qp: {str(e)}")
-        return {
-            "subject": "chemistry",
-            "total_questions": 25,
-            "easy": 7,
-            "medium": 11,
-            "hard": 7,
-            "difficulty_index": 0.58,
-            "complexity_label": "Moderate",
-            "predicted_paper_mean": 68.5,
-            "sample_questions": [],
-            "error": str(e)
-        }
+        raise HTTPException(status_code=500, detail=f"Error analyzing question paper: {str(e)}")

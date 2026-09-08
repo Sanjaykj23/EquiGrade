@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BarChart3, Brain, Calculator, CheckCircle2, FileText, FlaskConical, Layers, Loader2, Sparkles, Upload, Zap } from 'lucide-react';
+import { BarChart3, Brain, Calculator, CheckCircle2, FileText, FlaskConical, Loader2, Sparkles, Upload, Zap } from 'lucide-react';
 import { analyzeQuestionPaper } from '../../services/api';
 import { BoardType } from '../../types';
 
@@ -18,6 +18,7 @@ interface QPAnalysisResponse {
 export const QPAnalyzer: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [board, setBoard] = useState<BoardType>('STATE_BOARD');
+  const [manualSubject, setManualSubject] = useState<string>('auto');
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [qpdiResult, setQpdiResult] = useState<QPAnalysisResponse | null>(null);
 
@@ -26,6 +27,7 @@ export const QPAnalyzer: React.FC = () => {
       const file = e.target.files[0];
       if (file.type === 'application/pdf') {
         setSelectedFile(file);
+        setQpdiResult(null); // Reset previous result when a new file is attached
       } else {
         alert('Please upload a valid PDF question paper.');
       }
@@ -41,7 +43,7 @@ export const QPAnalyzer: React.FC = () => {
     setIsAnalyzing(true);
 
     try {
-      const result = await analyzeQuestionPaper(selectedFile, board);
+      const result = await analyzeQuestionPaper(selectedFile, board, manualSubject);
       setQpdiResult(result);
     } catch (error) {
       console.error('Error analyzing question paper:', error);
@@ -87,6 +89,7 @@ export const QPAnalyzer: React.FC = () => {
                 Upload Question Paper (PDF)
               </h5>
 
+              {/* Board Selector */}
               <div className="mb-3">
                 <label className="form-label small fw-bold" style={{ color: '#334155' }}>Select Board Category</label>
                 <div className="d-flex gap-2">
@@ -107,6 +110,22 @@ export const QPAnalyzer: React.FC = () => {
                 </div>
               </div>
 
+              {/* Subject Selector */}
+              <div className="mb-3">
+                <label className="form-label small fw-bold" style={{ color: '#334155' }}>Paper Subject Category</label>
+                <select
+                  className="form-select form-select-sm custom-input"
+                  value={manualSubject}
+                  onChange={(e) => setManualSubject(e.target.value)}
+                >
+                  <option value="auto">✨ Auto Detect Subject from PDF Content</option>
+                  <option value="physics">⚡ Physics Question Paper</option>
+                  <option value="chemistry">🧪 Chemistry Question Paper</option>
+                  <option value="maths">📐 Mathematics Question Paper</option>
+                </select>
+              </div>
+
+              {/* File Dropzone */}
               <label
                 className="dropzone-container d-block mb-4"
                 style={{ cursor: 'pointer' }}
@@ -156,7 +175,7 @@ export const QPAnalyzer: React.FC = () => {
         {/* Results Display Column */}
         <div className="col-lg-7">
           <div className="glass-panel p-4 h-100 bg-white">
-            <h5 className="fw-bold mb-3 d-flex align-items-center justify-content-between" style={{ color: '#0f172a' }}>
+            <h5 className="fw-bold mb-3 d-flex align-items-center justify-content-between flex-wrap gap-2" style={{ color: '#0f172a' }}>
               <span className="d-flex align-items-center gap-2">
                 <Brain size={20} style={{ color: '#7c3aed' }} />
                 QPDI AI Evaluation Report
@@ -223,18 +242,6 @@ export const QPAnalyzer: React.FC = () => {
                     <strong style={{ color: '#0f172a' }}>{qpdiResult.hard} Questions ({Math.round((qpdiResult.hard / qpdiResult.total_questions) * 100)}%)</strong>
                   </div>
                 </div>
-
-                {/* Extracted Sample Questions */}
-                {qpdiResult.sample_questions && qpdiResult.sample_questions.length > 0 && (
-                  <div className="stat-card" style={{ background: '#f8fafc', border: '1px solid #e2e8f0' }}>
-                    <h6 className="fw-bold mb-2" style={{ color: '#0f172a' }}>Sample Scanned OCR Question Excerpts</h6>
-                    <ul className="mb-0 ps-3 small" style={{ color: '#475569' }}>
-                      {qpdiResult.sample_questions.map((q, i) => (
-                        <li key={i} className="mb-1 text-truncate">{q}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
               </div>
             )}
           </div>
