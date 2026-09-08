@@ -3,12 +3,17 @@ import joblib
 import re
 import os
 import fitz
-from paddleocr import PaddleOCR
 from sentence_transformers import SentenceTransformer
+
+try:
+    from paddleocr import PaddleOCR
+    ocr = PaddleOCR(use_angle_cls=True, lang="en", show_log=False)
+except Exception as _ocr_err:
+    print(f"Notice: PaddleOCR not initialized ({_ocr_err}). PyMuPDF will handle PDF extraction.")
+    ocr = None
 
 # Initialize models once to save memory
 embed_model = SentenceTransformer("all-MiniLM-L6-v2")
-ocr = PaddleOCR(use_angle_cls=True, lang="en", show_log=False)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 def extract_text_from_pdf_bytes(file_bytes):

@@ -1,0 +1,2 @@
+# EquiGrade Core Python Dependencies
+-r Backend/requirements.txt
